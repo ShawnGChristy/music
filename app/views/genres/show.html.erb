@@ -2,7 +2,7 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @genre.name %>
+  <%= @genre.name.try (:name) %>
 </p>
 
 <%= link_to 'Edit', edit_genre_path(@genre) %> |
