@@ -1,0 +1,732 @@
+  [1m[36m (15.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (15.6ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateGenres (20160217161118)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160217161118"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Migrating to CreateArtists (20160217161158)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20160217161158"]]
+  [1m[36m (15.6ms)[0m  [1mcommit transaction[0m
+Migrating to CreateSongs (20160217161227)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160217161227"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+[0m
+
+
+Started GET "/" for ::1 at 2016-02-22 09:06:03 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GenresController#index as HTML
+  [1m[35mGenre Load (0.0ms)[0m  SELECT "genres".* FROM "genres"
+  Rendered genres/index.html.erb within layouts/application (0.0ms)
+Completed 200 OK in 5301ms (Views: 5269.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/" for ::1 at 2016-02-22 09:06:09 -0600
+Processing by GenresController#index as HTML
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  Rendered genres/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 144ms (Views: 144.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/artists" for ::1 at 2016-02-22 09:06:17 -0600
+Processing by ArtistsController#index as HTML
+  [1m[35mArtist Load (0.0ms)[0m  SELECT "artists".* FROM "artists"
+  Rendered artists/index.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 136ms (Views: 124.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mGenre Exists (0.0ms)[0m  SELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'rock' LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "rock"], ["created_at", "2016-02-22 15:08:13.656526"], ["updated_at", "2016-02-22 15:08:13.656526"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mGenre Exists (0.0ms)[0m  SELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'country' LIMIT 1
+  [1m[36mSQL (15.6ms)[0m  [1mINSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "country"], ["created_at", "2016-02-22 15:08:57.811998"], ["updated_at", "2016-02-22 15:08:57.811998"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mGenre Exists (0.0ms)[0m  SELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'indie' LIMIT 1
+  [1m[36mSQL (8.3ms)[0m  [1mINSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "indie"], ["created_at", "2016-02-22 15:09:50.320061"], ["updated_at", "2016-02-22 15:09:50.320061"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT  "genres".* FROM "genres"  ORDER BY "genres"."id" DESC LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE ("genres"."name" = 'indie' AND "genres"."id" != 3) LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mGenre Exists (0.0ms)[0m  SELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'popcorn' LIMIT 1
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "popcorn"], ["created_at", "2016-02-22 15:13:28.663803"], ["updated_at", "2016-02-22 15:13:28.663803"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT  "genres".* FROM "genres" WHERE "genres"."name" = ? LIMIT 1[0m  [["name", "popcorn"]]
+  [1m[35mGenre Load (0.0ms)[0m  SELECT  "genres".* FROM "genres" WHERE "genres"."name" = ? LIMIT 1  [["name", "popcorn"]]
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (15.6ms)[0m  DELETE FROM "genres" WHERE "genres"."id" = ?  [["id", 4]]
+  [1m[36m (15.6ms)[0m  [1mcommit transaction[0m
+  [1m[35mGenre Load (0.0ms)[0m  SELECT  "genres".* FROM "genres"  ORDER BY "genres"."id" DESC LIMIT 1
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres" WHERE (created_at . '2016-02-22 14:44:45.993720')[0m
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres" WHERE (DATE(created_at) = '2016-02-22')[0m
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT  "genres".* FROM "genres"  ORDER BY "genres"."created_at" DESC LIMIT 5[0m
+  [1m[36m (15.6ms)[0m  [1mCREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")
+  [1m[36m (15.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (15.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161227')
+  [1m[36m (15.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160217161118')[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161158')
+  [1m[36m (15.5ms)[0m  [1mCREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (15.6ms)[0m  [1mCREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")[0m
+  [1m[35m (15.6ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (15.7ms)[0m  [1mCREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (15.6ms)[0m  CREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (15.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (15.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161227')
+  [1m[36m (0.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160217161118')[0m
+  [1m[35m (31.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161158')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[36m (0.0ms)[0m  [1mDROP TABLE "artists"[0m
+  [1m[35m (15.7ms)[0m  CREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")
+  [1m[36m (15.6ms)[0m  [1mDROP TABLE "genres"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mDROP TABLE "songs"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (15.7ms)[0m  [1mDROP TABLE "artists"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")
+  [1m[36m (0.0ms)[0m  [1mDROP TABLE "genres"[0m
+  [1m[35m (15.6ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (15.6ms)[0m  [1mDROP TABLE "songs"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (15.6ms)[0m  [1mCREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[36mArtist Load (15.6ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[35mSong Load (0.0ms)[0m  SELECT "songs".* FROM "songs"
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[35mSong Load (0.0ms)[0m  SELECT "songs".* FROM "songs"
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mArtist Load (4.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[35mSong Load (0.0ms)[0m  SELECT "songs".* FROM "songs"
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[35mSong Load (0.0ms)[0m  SELECT "songs".* FROM "songs"
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'pop' LIMIT 1[0m
+  [1m[35mSQL (15.7ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "pop"], ["created_at", "2016-02-22 17:59:30.884497"], ["updated_at", "2016-02-22 17:59:30.884497"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'rock' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "rock"], ["created_at", "2016-02-22 17:59:30.900205"], ["updated_at", "2016-02-22 17:59:30.900205"]]
+  [1m[36m (15.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'hip hop' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "hip hop"], ["created_at", "2016-02-22 17:59:30.915750"], ["updated_at", "2016-02-22 17:59:30.915750"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'country' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "country"], ["created_at", "2016-02-22 17:59:30.915750"], ["updated_at", "2016-02-22 17:59:30.915750"]]
+  [1m[36m (15.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'blues' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "blues"], ["created_at", "2016-02-22 17:59:30.931456"], ["updated_at", "2016-02-22 17:59:30.931456"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (31.3ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'jazz' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "jazz"], ["created_at", "2016-02-22 17:59:30.962716"], ["updated_at", "2016-02-22 17:59:30.962716"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'latin' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "latin"], ["created_at", "2016-02-22 17:59:30.962716"], ["updated_at", "2016-02-22 17:59:30.962716"]]
+  [1m[36m (15.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (31.3ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'bounce' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "bounce"], ["created_at", "2016-02-22 17:59:31.009600"], ["updated_at", "2016-02-22 17:59:31.009600"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[35mSong Load (0.0ms)[0m  SELECT "songs".* FROM "songs"
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.7ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (1, 'Duobam', 1, '2016-02-22 17:59:56.294219', '2016-02-22 17:59:56.294219'), (2, 'Konklux', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (3, 'Stringtough', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (4, 'Temp', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (5, 'Asoka', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121')
+  [1m[36mSong Populate (15.6ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (1, 'Schlitz Dreamcatcher Forage', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (2, 'Slow Carb Taxidermy Typewriter', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (3, 'Narwhal Ramps Lo Fi', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (4, 'Skateboard Kickstarter Taxidermy', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (5, 'Flannel Kinfolk Beard', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (6, 'Stumptown I Phone Post Ironic', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (7, 'Locavore Tacos Skateboard', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (8, 'Selfies Cardigan Bitters', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (9, 'Ethical Yr Asymmetrical', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (10, 'Austin Biodiesel Chicharrones', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (11, 'Vegan Lomo Gentrify', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (12, 'Synth Ugh Goth', 1, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (13, 'Cornhole Swag Butcher', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (14, 'Post Ironic Mlkshk Xoxo', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (15, '+1 Xoxo Forage', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (16, 'Ethical Selfies Cardigan', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (17, 'Meditation Distillery Vinyl', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (18, 'Hoodie Tousled Microdosing', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (19, 'Seitan Cronut Blog', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (20, 'Yolo Irony Gastropub', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (21, 'Intelligentsia Leggings Chia', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (22, 'Lo Fi Meggings Gastropub', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (23, 'Tousled Kogi Street', 2, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (24, 'Typewriter Ethical Vegan', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (25, 'Cleanse Pinterest Kitsch', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (26, 'Skateboard Lomo Knausgaard', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (27, 'Occupy Wolf Heirloom', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (28, 'Kickstarter Neutra Tumblr', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (29, 'Banjo Mlkshk Typewriter', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (30, 'Biodiesel Seitan Synth', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (31, 'Vegan Paleo Selfies', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (32, 'Letterpress Sriracha Farm To Table', 3, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (33, 'Knausgaard Banjo Everyday', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (34, 'Tattooed Diy Heirloom', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (35, 'Tilde Polaroid Street', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (36, 'Portland Yolo Pop Up', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (37, 'Kombucha Disrupt Flexitarian', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (38, 'Cliche Chicharrones Sustainable', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (39, 'Humblebrag Blog Franzen', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (40, 'Humblebrag Blog Twee', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (41, 'Austin Authentic Carry', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (42, 'Typewriter Swag Cleanse', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (43, 'Banjo Salvia Schlitz', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (44, 'Everyday Vhs Tumblr', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (45, 'Godard Keffiyeh Fap', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (46, 'Ethical Austin Freegan', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (47, 'Biodiesel Artisan Vinyl', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (48, 'Lumbersexual Kitsch Stumptown', 4, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (49, 'Banjo Typewriter Fap', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (50, 'Kinfolk Lomo Retro', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (51, 'Cardigan Vice Whatever', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (52, 'Pbr&B Ugh Waistcoat', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (53, 'Sartorial Normcore Beard', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (54, 'Diy Occupy Typewriter', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (55, 'Squid Chartreuse Stumptown', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (56, 'Yuccie Mustache Forage', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (57, 'Leggings Carry Tacos', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (58, 'Aesthetic Ethical Master', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (59, 'Listicle Schlitz Normcore', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (60, 'Cleanse Bespoke Microdosing', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (61, 'Narwhal +1 Try Hard', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121'), (62, 'Etsy Semiotics Park', 5, '2016-02-22 17:59:56.591121', '2016-02-22 17:59:56.591121')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.6ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (6, 'Ventosanzap', 2, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (7, 'Rank', 2, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (8, 'Tin', 2, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (9, 'Namfix', 2, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (10, 'Veribet', 2, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474')
+  [1m[36mSong Populate (15.5ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (63, 'Sriracha Sustainable Intelligentsia', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (64, 'Plaid Kickstarter Pour Over', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (65, 'Crucifix Vinegar Occupy', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (66, 'Microdosing Scenester Chambray', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (67, 'Bespoke Sustainable Slow Carb', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (68, 'Cornhole Xoxo Pickled', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (69, 'Cold Pressed Pop Up Fixie', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (70, 'Semiotics Offal Fixie', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (71, 'Selvage Ramps Cray', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (72, 'Keytar Beard Celiac', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (73, 'Paleo Swag Hoodie', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (74, 'Ugh Actually Drinking', 6, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (75, 'Biodiesel Chartreuse Fixie', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (76, 'Plaid Knausgaard Ugh', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (77, 'Ramps Thundercats Godard', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (78, 'Ennui Letterpress Wolf', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (79, 'Pabst +1 Hella', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (80, 'Austin Keytar Tousled', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (81, 'Biodiesel Cardigan Shoreditch', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (82, 'Master Farm To Table Ennui', 7, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (83, 'Neutra Migas Pop Up', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (84, 'Forage Twee Selfies', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (85, 'Fap Literally Chartreuse', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (86, 'Cornhole Blog Wolf', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (87, 'Goth Selvage Vhs', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (88, 'Mumblecore +1 Pitchfork', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (89, 'Normcore Gentrify Cray', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (90, 'Synth Tacos Scenester', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (91, 'Austin Flannel Locavore', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (92, 'Kombucha Banjo Poutine', 8, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (93, 'Yr Mumblecore 90''s', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (94, 'Ramps Blog Skateboard', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (95, 'Slow Carb Crucifix Cardigan', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (96, 'Distillery Bitters Godard', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (97, 'Pop Up Crucifix Echo', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (98, 'Keytar Gluten Free Tousled', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (99, 'Authentic Yr Paleo', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (100, 'Hashtag Street Aesthetic', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (101, 'Chia Taxidermy Yr', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (102, 'Flexitarian Lo Fi Selfies', 9, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (103, 'Tacos Vhs Meggings', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (104, 'Tacos Kinfolk Cronut', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (105, 'Distillery Hoodie Twee', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (106, 'Offal Cray Freegan', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (107, 'Diy Poutine Roof', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (108, 'Plaid Kombucha Knausgaard', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (109, 'Portland 8 Bit Venmo', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474'), (110, 'Drinking Yuccie 8 Bit', 10, '2016-02-22 17:59:56.622474', '2016-02-22 17:59:56.622474')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.7ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (11, 'Tin', 3, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (12, 'Quo Lux', 3, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (13, 'Overhold', 3, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (14, 'Home Ing', 3, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (15, 'Bigtax', 3, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631')
+  [1m[36mSong Populate (21.4ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (111, 'Helvetica Kitsch Gastropub', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (112, 'Readymade Neutra Migas', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (113, 'Gentrify Typewriter Intelligentsia', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (114, 'Selfies Asymmetrical Intelligentsia', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (115, 'Cliche Schlitz Tofu', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (116, 'Helvetica Wayfarers Distillery', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (117, 'Microdosing Austin +1', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (118, 'Cray Sustainable Typewriter', 11, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (119, 'Austin Quinoa Paleo', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (120, 'Polaroid Cold Pressed Listicle', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (121, 'Park Celiac Gentrify', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (122, 'Pabst Bespoke Pitchfork', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (123, 'Etsy Organic Loko', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (124, 'Cred Chillwave Retro', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (125, 'Listicle Biodiesel Offal', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (126, 'Carry Aesthetic Austin', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (127, 'Scenester Disrupt Meditation', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (128, 'Pbr&B Brunch Godard', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (129, 'Polaroid Disrupt Ramps', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (130, 'Selfies Bitters Everyday', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (131, 'Cliche Try Hard Mixtape', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (132, 'Swag Keffiyeh Etsy', 12, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (133, 'Godard Cold Pressed Fap', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (134, 'Sustainable Drinking Slow Carb', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (135, 'Pabst Viral Slow Carb', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (136, 'Crucifix Viral Twee', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (137, 'Lomo Hella Ramps', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (138, 'Lo Fi Goth Narwhal', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (139, 'Meh Keffiyeh Kinfolk', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (140, 'Umami Portland Ethical', 13, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (141, 'Godard Helvetica 90''s', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (142, 'Pbr&B Thundercats Offal', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (143, 'Ugh Ramps Ennui', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (144, 'Thundercats Stumptown Meh', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (145, 'Gluten Free Flexitarian Forage', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (146, 'Pop Up Farm To Table Offal', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (147, 'Beard Seitan Lo Fi', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (148, 'Lomo Celiac Vinegar', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (149, 'Kickstarter Schlitz Semiotics', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (150, 'Mlkshk Organic Keffiyeh', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (151, 'Hashtag Chicharrones Pbr&B', 14, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (152, 'Tilde Master Chartreuse', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (153, 'Mumblecore Organic Pitchfork', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (154, 'I Phone Mustache Hoodie', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (155, 'Carry Tumblr Tilde', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (156, 'Cardigan Ethical Roof', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (157, 'Echo Venmo Beard', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (158, 'Bushwick Keffiyeh Swag', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (159, 'Tattooed Listicle Vhs', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (160, 'Street Church Key Cold Pressed', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (161, 'I Phone Schlitz Mixtape', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (162, 'Godard Flexitarian Offal', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631'), (163, 'Mixtape Truffaut Master', 15, '2016-02-22 17:59:56.653631', '2016-02-22 17:59:56.653631')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (8.0ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (16, 'Toughjoyfax', 4, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (17, 'Greenlam', 4, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (18, 'Tres-Zap', 4, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (19, 'Job', 4, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (20, 'Greenlam', 4, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717')
+  [1m[36mSong Populate (4.3ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (164, 'Pickled Selfies Park', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (165, '8 Bit Pitchfork Occupy', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (166, 'Yolo Church Key Intelligentsia', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (167, 'Diy Polaroid Irony', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (168, 'Bespoke Typewriter Viral', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (169, 'Brooklyn Sustainable Hashtag', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (170, 'Beard Microdosing Typewriter', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (171, 'Offal Hella Quinoa', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (172, 'Pickled Yuccie Chartreuse', 16, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (173, 'Yr Mustache Loko', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (174, 'Pinterest Tilde Mustache', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (175, 'Cronut Sustainable Tacos', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (176, 'Migas Disrupt Tilde', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (177, 'Microdosing Chicharrones Tilde', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (178, 'Migas Chicharrones Keffiyeh', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (179, 'Swag I Phone Flannel', 17, '2016-02-22 17:59:56.690710', '2016-02-22 17:59:56.690710'), (180, 'Pug Truffaut Squid', 17, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (181, 'Humblebrag Squid Neutra', 17, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (182, 'Plaid Whatever Sartorial', 17, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (183, 'Actually Marfa Tumblr', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (184, 'Sriracha Forage Godard', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (185, 'Pinterest Celiac Cronut', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (186, 'Asymmetrical Vegan Cred', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (187, 'Readymade 8 Bit Crucifix', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (188, 'Everyday Organic Tattooed', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (189, 'Semiotics +1 Neutra', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (190, 'Microdosing Heirloom Tofu', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (191, 'Everyday Vegan Chicharrones', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (192, 'Chambray Selvage Kinfolk', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (193, 'Etsy Dreamcatcher Butcher', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (194, 'Crucifix Pitchfork Marfa', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (195, 'Pickled Seitan Authentic', 18, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (196, 'Post Ironic Banjo Paleo', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (197, 'Migas Seitan Twee', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (198, 'Retro Kickstarter Viral', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (199, 'Quinoa Cornhole Fingerstache', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (200, 'Synth Locavore Cliche', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (201, 'Fixie Cronut Pop Up', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (202, 'Etsy Everyday Chartreuse', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (203, 'Meditation Goth Drinking', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (204, 'Everyday Humblebrag Listicle', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (205, 'Banjo Quinoa Selfies', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (206, 'Aesthetic Selvage Leggings', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (207, 'Vinegar Drinking Irony', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (208, 'Try Hard Kitsch Biodiesel', 19, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (209, 'Drinking Xoxo Neutra', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (210, 'Vice Helvetica Lo Fi', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (211, 'Microdosing Heirloom Biodiesel', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (212, 'Pinterest Church Key Mixtape', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (213, 'Cold Pressed Tofu Butcher', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (214, 'Cleanse Schlitz Vinyl', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (215, 'Xoxo Street Migas', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (216, 'Poutine Mixtape Butcher', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (217, 'Paleo Blog Keytar', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (218, 'Vice Twee Kogi', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (219, 'Pitchfork Post Ironic Readymade', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717'), (220, 'Pabst Health Cold Pressed', 20, '2016-02-22 17:59:56.694717', '2016-02-22 17:59:56.694717')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.6ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (21, 'Sub-Ex', 5, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (22, 'Otcom', 5, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (23, 'Gembucket', 5, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (24, 'Ventosanzap', 5, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (25, 'Andalax', 5, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037')
+  [1m[36mSong Populate (15.6ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (221, 'Sriracha Loko Pug', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (222, 'Schlitz Literally Vhs', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (223, 'Gentrify Banjo Synth', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (224, 'Humblebrag Keffiyeh Offal', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (225, 'Microdosing Marfa Loko', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (226, 'Vegan Sriracha Irony', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (227, 'Ugh Meggings Squid', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (228, 'Marfa Vhs Whatever', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (229, 'Gentrify 8 Bit Slow Carb', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (230, 'Sriracha Neutra Dreamcatcher', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (231, 'Ethical Williamsburg Godard', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (232, 'Kinfolk Pitchfork Migas', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (233, 'Keffiyeh Mustache Ennui', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (234, 'Yolo Selfies Skateboard', 21, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (235, 'Kogi Migas Mustache', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (236, 'Wolf Drinking Mlkshk', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (237, 'Pickled Twee Pop Up', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (238, 'Goth Skateboard Chia', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (239, 'Everyday Plaid Letterpress', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (240, 'Locavore Heirloom Tousled', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (241, 'Diy Meh Seitan', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (242, 'Bespoke Meh Waistcoat', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (243, 'Chartreuse Yuccie Xoxo', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (244, 'Pbr&B Actually Retro', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (245, 'Echo Meh Normcore', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (246, 'Sustainable Lo Fi Knausgaard', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (247, 'Vegan Xoxo 8 Bit', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (248, 'Cliche Actually Kitsch', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (249, 'Artisan Drinking Tumblr', 22, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (250, 'Tousled Church Key Echo', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (251, 'Brooklyn Wayfarers Occupy', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (252, 'Aesthetic Vegan Seitan', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (253, 'Swag Lomo Gluten Free', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (254, 'Humblebrag Pickled Ugh', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (255, 'Goth Ugh Occupy', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (256, 'Migas Kinfolk Sriracha', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (257, 'Cardigan Williamsburg Lumbersexual', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (258, 'Normcore Biodiesel Readymade', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (259, 'Blog Retro Semiotics', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (260, 'Yuccie Retro Salvia', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (261, 'Xoxo Kombucha Master', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (262, 'Try Hard Cronut Beard', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (263, 'Vhs Farm To Table Paleo', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (264, 'Organic Gentrify Whatever', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (265, 'Franzen Ugh Diy', 23, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (266, 'Fixie Salvia Portland', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (267, 'Synth Salvia Hammock', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (268, 'Bespoke Biodiesel Diy', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (269, 'Banjo Portland Chillwave', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (270, 'Yolo Fixie Wayfarers', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (271, 'Etsy Xoxo Helvetica', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (272, 'Leggings Kitsch Mlkshk', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (273, 'Mlkshk Fap Migas', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (274, 'Cronut Vinegar Blog', 24, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (275, 'Artisan +1 Taxidermy', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (276, 'Synth Squid Lomo', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (277, 'Cold Pressed Etsy Meh', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (278, 'Chicharrones Synth Mustache', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (279, 'Mumblecore Kitsch +1', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (280, 'Vhs Semiotics Stumptown', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (281, 'Butcher Kitsch Sartorial', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (282, 'Mustache Try Hard Vice', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037'), (283, 'Loko Sustainable Normcore', 25, '2016-02-22 17:59:56.719037', '2016-02-22 17:59:56.719037')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.6ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (26, 'Pannier', 6, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (27, 'Fixflex', 6, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (28, 'Gembucket', 6, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (29, 'Tres-Zap', 6, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (30, 'It', 6, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291')
+  [1m[36mSong Populate (0.0ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (284, 'Forage Etsy Leggings', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (285, 'Schlitz Literally Etsy', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (286, 'Ramps Godard Forage', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (287, 'Asymmetrical Heirloom +1', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (288, 'Artisan Pabst Readymade', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (289, 'Vinegar Post Ironic Gentrify', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (290, 'Brooklyn Truffaut Farm To Table', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (291, 'Drinking Letterpress Lumbersexual', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (292, 'Tacos 90''s Ethical', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (293, 'Post Ironic Vice Humblebrag', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (294, 'Flexitarian Health Cliche', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (295, 'Ugh 8 Bit Shoreditch', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (296, 'Thundercats Farm To Table Bitters', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (297, 'Mustache Normcore Pabst', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (298, 'Keytar Stumptown Venmo', 26, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (299, '8 Bit Neutra Tofu', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (300, 'Stumptown Farm To Table Carry', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (301, 'Tousled Vhs Chicharrones', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (302, 'Bitters Meh Carry', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (303, 'Blog Sriracha Kitsch', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (304, 'Post Ironic +1 Kitsch', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (305, 'Carry Tofu Authentic', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (306, 'Kombucha Biodiesel Freegan', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (307, 'Heirloom Kickstarter +1', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (308, 'Goth Quinoa Hashtag', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (309, 'Wayfarers Meditation Chartreuse', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (310, 'Tofu Dreamcatcher Occupy', 27, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (311, 'Godard Whatever Ugh', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (312, 'Occupy Neutra Flexitarian', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (313, 'Venmo Migas Chia', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (314, 'Organic Roof Kombucha', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (315, 'Poutine Farm To Table Blog', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (316, 'Meditation Waistcoat Selfies', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (317, 'Blog Pug Yr', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (318, 'Typewriter Normcore Poutine', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (319, 'Freegan Tilde Drinking', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (320, 'Hashtag Microdosing Polaroid', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (321, 'Narwhal Forage Actually', 28, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (322, 'Sartorial Tumblr Authentic', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (323, 'Pickled +1 Literally', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (324, 'Lomo Locavore Post Ironic', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (325, 'Typewriter Keffiyeh Wayfarers', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (326, 'Pug Hoodie Tumblr', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (327, 'Bushwick Brooklyn Wolf', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (328, 'Leggings Knausgaard Lo Fi', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (329, 'Whatever Pug I Phone', 29, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (330, 'Master Poutine Marfa', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (331, 'Lomo Flannel Church Key', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (332, 'Tattooed Goth Street', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (333, 'Vinegar Hoodie Pinterest', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (334, 'Narwhal Actually Schlitz', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (335, 'Vhs Bushwick Chicharrones', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (336, 'Kinfolk Humblebrag Disrupt', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (337, 'Neutra Listicle Vinyl', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (338, 'Chambray Pitchfork Cliche', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (339, 'Poutine Chillwave Kombucha', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (340, 'Pbr&B Wayfarers Everyday', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (341, 'Pbr&B Sartorial Wayfarers', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (342, 'Hoodie Knausgaard Yr', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291'), (343, 'Bushwick 90''s Mlkshk', 30, '2016-02-22 17:59:56.750291', '2016-02-22 17:59:56.750291')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.6ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (31, 'Regrant', 7, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (32, 'Konklab', 7, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (33, 'Flexidy', 7, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (34, 'Regrant', 7, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (35, 'Bamity', 7, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544')
+  [1m[36mSong Populate (15.6ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (344, 'Everyday Vice Kinfolk', 31, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (345, 'Beard Banjo Normcore', 31, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (346, 'Hoodie Locavore Scenester', 31, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (347, 'Meggings Butcher Marfa', 31, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (348, 'Kickstarter Keytar Fingerstache', 31, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (349, 'Aesthetic Readymade Chillwave', 31, '2016-02-22 17:59:56.765919', '2016-02-22 17:59:56.765919'), (350, 'Literally Gastropub Letterpress', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (351, 'Kombucha Chicharrones Retro', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (352, 'Chicharrones Forage Keffiyeh', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (353, 'Schlitz Occupy Seitan', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (354, 'Meggings Street Forage', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (355, 'Keytar Pinterest Taxidermy', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (356, 'Ugh Polaroid Bitters', 31, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (357, 'Hoodie Dreamcatcher Cronut', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (358, 'Kinfolk Pour Over Meditation', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (359, 'Kogi Retro Authentic', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (360, 'Meggings Truffaut Celiac', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (361, 'Austin Celiac Chartreuse', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (362, 'Stumptown Pabst Pug', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (363, 'Actually Echo Cred', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (364, 'Occupy Cardigan Pour Over', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (365, 'Gluten Free Yolo Everyday', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (366, 'Asymmetrical Diy Keytar', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (367, 'Paleo Vice Xoxo', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (368, 'Occupy Squid Pitchfork', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (369, 'Flannel Keffiyeh Hashtag', 32, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (370, 'Meditation Chillwave Kogi', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (371, 'Flexitarian Yolo Aesthetic', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (372, 'Church Key Vice Umami', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (373, 'Gastropub Cornhole Meggings', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (374, 'Cornhole Occupy Knausgaard', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (375, 'Williamsburg Shoreditch Vice', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (376, 'Neutra Wolf Ethical', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (377, 'Yr Chillwave Umami', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (378, 'Seitan Semiotics Lomo', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (379, 'I Phone Taxidermy Sriracha', 33, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (380, 'Sartorial Brooklyn 8 Bit', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (381, 'Hoodie Diy 8 Bit', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (382, '8 Bit Venmo Franzen', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (383, 'Flexitarian Meh Etsy', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (384, 'Blog Cleanse Disrupt', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (385, 'Biodiesel Vice Diy', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (386, 'Meditation Vegan Pop Up', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (387, 'Cold Pressed Gentrify Yuccie', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (388, 'Ramps Disrupt Ramps', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (389, 'Ethical Ethical Taxidermy', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (390, 'Everyday Ramps Hashtag', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (391, 'Mlkshk Tofu Venmo', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (392, 'Post Ironic Freegan Goth', 34, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (393, 'Vegan Knausgaard Loko', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (394, 'Irony Biodiesel Listicle', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (395, 'Church Key Brooklyn Hella', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (396, 'Knausgaard Yr Aesthetic', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (397, 'Asymmetrical Sriracha Whatever', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (398, 'Roof Distillery Beard', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (399, 'Selfies Keffiyeh Everyday', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (400, 'Artisan Retro Tofu', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (401, 'Kickstarter Austin Cold Pressed', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (402, 'Pickled Synth Dreamcatcher', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (403, 'Banjo Cornhole Cardigan', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (404, 'Fingerstache Pop Up Roof', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (405, 'Seitan Viral Kombucha', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (406, 'Flannel Stumptown Mustache', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (407, 'Kickstarter Kickstarter Cray', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544'), (408, 'Yuccie Thundercats Asymmetrical', 35, '2016-02-22 17:59:56.781544', '2016-02-22 17:59:56.781544')[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m
+  [1m[35mArtist Populate (15.7ms)[0m  INSERT INTO "artists" ("id", "name", "genre_id", "created_at", "updated_at") VALUES (36, 'Fix San', 8, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (37, 'Tempsoft', 8, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (38, 'Tres-Zap', 8, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (39, 'Gembucket', 8, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (40, 'Zathin', 8, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799')
+  [1m[36mSong Populate (0.0ms)[0m  [1mINSERT INTO "songs" ("id", "title", "artist_id", "created_at", "updated_at") VALUES (409, 'Synth 8 Bit Vinegar', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (410, 'Narwhal Gastropub Shoreditch', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (411, 'Brooklyn Farm To Table Cray', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (412, 'Banjo Asymmetrical Vhs', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (413, 'Portland +1 Selvage', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (414, 'Sartorial Readymade Celiac', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (415, 'Sustainable Pug Whatever', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (416, 'Williamsburg Authentic Blog', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (417, 'Kombucha Squid Quinoa', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (418, 'Swag Selvage Tacos', 36, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (419, 'Bushwick Yr Mixtape', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (420, 'Mixtape Pinterest Kogi', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (421, 'Post Ironic Diy Gastropub', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (422, 'Irony Bitters Echo', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (423, 'Listicle Kinfolk Kogi', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (424, 'Kogi Mlkshk Bitters', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (425, 'Disrupt Freegan Tacos', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (426, 'Actually Actually Letterpress', 37, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (427, 'Pinterest Echo Heirloom', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (428, 'Vice Pour Over Banjo', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (429, 'Chambray Brooklyn Scenester', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (430, 'Offal Slow Carb 90''s', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (431, 'Cliche Williamsburg Godard', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (432, 'Pickled Brooklyn Venmo', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (433, 'Ugh Yolo Loko', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (434, 'Hella Salvia Kogi', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (435, 'Selvage Chambray Distillery', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (436, 'Diy Readymade Seitan', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (437, 'Crucifix Actually Truffaut', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (438, 'Fixie Vegan Cold Pressed', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (439, 'Kogi Migas I Phone', 38, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (440, 'Try Hard Tilde Tacos', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (441, '+1 Godard Chambray', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (442, 'Locavore Organic Kitsch', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (443, 'Freegan Swag Heirloom', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (444, 'Slow Carb Tofu Meditation', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (445, 'Selvage Vegan Farm To Table', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (446, 'Occupy Actually Cleanse', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (447, 'Cray Kinfolk Butcher', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (448, 'Meditation Scenester Yolo', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (449, 'Try Hard Street Lo Fi', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (450, 'Brooklyn Wolf Chillwave', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (451, 'Cleanse Loko Pour Over', 39, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (452, 'Everyday Paleo Brunch', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (453, 'Yuccie Pour Over Plaid', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (454, 'Vice Portland Vinegar', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (455, 'Bushwick Ramps Mixtape', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (456, 'Mumblecore Chambray Kitsch', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (457, 'Humblebrag Venmo Retro', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (458, 'Shoreditch Franzen Seitan', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (459, 'Migas Franzen Farm To Table', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (460, 'Brunch Xoxo Poutine', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (461, 'Mumblecore Loko Pickled', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (462, 'Hammock Schlitz Bushwick', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799'), (463, 'Health Cred Cornhole', 40, '2016-02-22 17:59:56.812799', '2016-02-22 17:59:56.812799')[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+
+
+Started GET "/" for ::1 at 2016-02-22 13:06:01 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+ActiveRecord::PendingMigrationError - 
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+:
+  activerecord (4.2.5) lib/active_record/migration.rb:392:in `check_pending!'
+  activerecord (4.2.5) lib/active_record/migration.rb:373:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:84:in `protected_app_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:79:in `better_errors_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:57:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.5) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.1.0) lib/quiet_assets.rb:27:in `call_with_quiet_assets'
+  actionpack (4.2.5) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.5) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/static.rb:116:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.5) lib/rails/engine.rb:518:in `call'
+  railties (4.2.5) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+
+Started POST "/__better_errors/160e7eb880c4c070/variables" for ::1 at 2016-02-22 13:06:01 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+
+
+Started GET "/" for ::1 at 2016-02-22 13:10:12 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+ActiveRecord::PendingMigrationError - 
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+:
+  activerecord (4.2.5) lib/active_record/migration.rb:392:in `check_pending!'
+  activerecord (4.2.5) lib/active_record/migration.rb:373:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:84:in `protected_app_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:79:in `better_errors_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:57:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.5) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.1.0) lib/quiet_assets.rb:27:in `call_with_quiet_assets'
+  actionpack (4.2.5) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.5) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/static.rb:116:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.5) lib/rails/engine.rb:518:in `call'
+  railties (4.2.5) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+
+Started POST "/__better_errors/799722ac5adba06e/variables" for ::1 at 2016-02-22 13:10:12 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+
+
+Started GET "/" for ::1 at 2016-02-22 13:16:48 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+ActiveRecord::PendingMigrationError - 
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+:
+  activerecord (4.2.5) lib/active_record/migration.rb:392:in `check_pending!'
+  activerecord (4.2.5) lib/active_record/migration.rb:373:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:84:in `protected_app_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:79:in `better_errors_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:57:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.5) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.1.0) lib/quiet_assets.rb:27:in `call_with_quiet_assets'
+  actionpack (4.2.5) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.5) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/static.rb:116:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.5) lib/rails/engine.rb:518:in `call'
+  railties (4.2.5) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+
+Started POST "/__better_errors/67b48959d04cc1ae/variables" for ::1 at 2016-02-22 13:16:48 -0600
+
+
+Started GET "/artists" for ::1 at 2016-02-22 13:16:54 -0600
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+
+ActiveRecord::PendingMigrationError - 
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+:
+  activerecord (4.2.5) lib/active_record/migration.rb:392:in `check_pending!'
+  activerecord (4.2.5) lib/active_record/migration.rb:373:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:84:in `protected_app_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:79:in `better_errors_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:57:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.5) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.1.0) lib/quiet_assets.rb:27:in `call_with_quiet_assets'
+  actionpack (4.2.5) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.5) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/static.rb:116:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.5) lib/rails/engine.rb:518:in `call'
+  railties (4.2.5) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+
+Started POST "/__better_errors/5922e30d23d58c02/variables" for ::1 at 2016-02-22 13:16:55 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+
+
+Started GET "/artists" for ::1 at 2016-02-22 14:00:53 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+
+ActiveRecord::PendingMigrationError - 
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+:
+  activerecord (4.2.5) lib/active_record/migration.rb:392:in `check_pending!'
+  activerecord (4.2.5) lib/active_record/migration.rb:373:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:88:in `__run_callbacks__'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  activesupport (4.2.5) lib/active_support/callbacks.rb:81:in `run_callbacks'
+  actionpack (4.2.5) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:84:in `protected_app_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:79:in `better_errors_call'
+  better_errors (2.1.1) lib/better_errors/middleware.rb:57:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.2.5) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.2.5) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.2.5) lib/rails/rack/logger.rb:20:in `call'
+  quiet_assets (1.1.0) lib/quiet_assets.rb:27:in `call_with_quiet_assets'
+  actionpack (4.2.5) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.4) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.4) lib/rack/runtime.rb:18:in `call'
+  activesupport (4.2.5) lib/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  actionpack (4.2.5) lib/action_dispatch/middleware/static.rb:116:in `call'
+  rack (1.6.4) lib/rack/sendfile.rb:113:in `call'
+  railties (4.2.5) lib/rails/engine.rb:518:in `call'
+  railties (4.2.5) lib/rails/application.rb:165:in `call'
+  rack (1.6.4) lib/rack/lock.rb:17:in `call'
+  rack (1.6.4) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.4) lib/rack/handler/webrick.rb:88:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  C:/RailsInstaller/Ruby2.1.0/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+
+Started POST "/__better_errors/1a1b73748bd5c905/variables" for ::1 at 2016-02-22 14:00:53 -0600
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (15.6ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (0.0ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateGenres (20160217161118)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160217161118"]]
+  [1m[35m (15.6ms)[0m  commit transaction
+Migrating to CreateArtists (20160217161158)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20160217161158"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Migrating to CreateSongs (20160217161227)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")
+  [1m[36mSQL (0.0ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20160217161227"]]
+  [1m[35m (0.0ms)[0m  commit transaction
+Migrating to AddBioToDogs (20160222190519)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  ALTER TABLE "dogs" ADD "bio" text
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (15.6ms)[0m  [1mCREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (15.6ms)[0m  CREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")
+  [1m[36m (15.7ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (15.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161227')
+  [1m[36m (31.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160217161118')[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161158')
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (15.7ms)[0m  [1mCREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")[0m
+  [1m[35m (15.6ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mCREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  CREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")
+  [1m[36m (15.5ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (15.6ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.0ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161227')
+  [1m[36m (15.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160217161118')[0m
+  [1m[35m (0.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160217161158')
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToDogs (20160222190519)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "dogs" ADD "bio" text[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (15.7ms)[0m  [1mDROP TABLE "artists"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (15.7ms)[0m  CREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")
+  [1m[36m (0.0ms)[0m  [1mDROP TABLE "genres"[0m
+  [1m[35m (15.6ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mDROP TABLE "songs"[0m
+  [1m[35m (31.3ms)[0m  CREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (15.6ms)[0m  [1mCREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (15.6ms)[0m  [1mDROP TABLE "artists"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "artists" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "genre_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (15.6ms)[0m  CREATE  INDEX "index_artists_on_genre_id" ON "artists" ("genre_id")
+  [1m[36m (15.7ms)[0m  [1mDROP TABLE "genres"[0m
+  [1m[35m (0.0ms)[0m  CREATE TABLE "genres" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.0ms)[0m  [1mDROP TABLE "songs"[0m
+  [1m[35m (15.6ms)[0m  CREATE TABLE "songs" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar, "artist_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (15.6ms)[0m  [1mCREATE  INDEX "index_songs_on_artist_id" ON "songs" ("artist_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddBioToArtists (20160222190823)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mALTER TABLE "artists" ADD "bio" text[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20160222190823"]]
+  [1m[36m (78.1ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_artists_on_genre_id' AND type='index'
+[0m
+  [1m[35m (0.0ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_songs_on_artist_id' AND type='index'
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'pop' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "pop"], ["created_at", "2016-02-22 20:50:48.562256"], ["updated_at", "2016-02-22 20:50:48.562256"]]
+  [1m[36m (15.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'rock' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "rock"], ["created_at", "2016-02-22 20:50:48.577976"], ["updated_at", "2016-02-22 20:50:48.577976"]]
+  [1m[36m (15.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'hip hop' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "hip hop"], ["created_at", "2016-02-22 20:50:48.593510"], ["updated_at", "2016-02-22 20:50:48.593510"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'country' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "country"], ["created_at", "2016-02-22 20:50:48.593510"], ["updated_at", "2016-02-22 20:50:48.593510"]]
+  [1m[36m (15.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'blues' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "blues"], ["created_at", "2016-02-22 20:50:48.609220"], ["updated_at", "2016-02-22 20:50:48.609220"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'jazz' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "jazz"], ["created_at", "2016-02-22 20:50:48.624793"], ["updated_at", "2016-02-22 20:50:48.624793"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'latin' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "latin"], ["created_at", "2016-02-22 20:50:48.624793"], ["updated_at", "2016-02-22 20:50:48.624793"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36mGenre Exists (0.0ms)[0m  [1mSELECT  1 AS one FROM "genres" WHERE "genres"."name" = 'bounce' LIMIT 1[0m
+  [1m[35mSQL (0.0ms)[0m  INSERT INTO "genres" ("name", "created_at", "updated_at") VALUES (?, ?, ?)  [["name", "bounce"], ["created_at", "2016-02-22 20:50:48.640390"], ["updated_at", "2016-02-22 20:50:48.640390"]]
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+  [1m[36mArtist Load (0.0ms)[0m  [1mSELECT "artists".* FROM "artists"[0m
+  [1m[35mSong Load (0.0ms)[0m  SELECT "songs".* FROM "songs"
+  [1m[36mGenre Load (0.0ms)[0m  [1mSELECT "genres".* FROM "genres"[0m
+  [1m[35mArtist Last ID (0.0ms)[0m  SELECT id FROM "artists" ORDER BY id DESC
+  [1m[36mSong Last ID (0.0ms)[0m  [1mSELECT id FROM "songs" ORDER BY id DESC[0m

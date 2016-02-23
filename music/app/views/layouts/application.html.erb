@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Music</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+  <div class="container">
+    <p>
+      <%= link_to "Genres", genres_path %>
+      <%= link_to "Artists", artists_path %>
+      <%= link_to "Songs", songs_path %>
+    </p>
+
+    <%= yield %>
+  </div>
+
+</body>
+</html>
